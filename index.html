@@ -1034,13 +1034,16 @@
         .top-bar .right-actions {
             display: flex;
             align-items: center;
-            gap: 18px;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
         }
 
         .top-bar .right-actions .greeting {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 13px;
             font-weight: 400;
+            white-space: nowrap;
         }
 
         .top-bar .right-actions .greeting strong {
@@ -1048,17 +1051,30 @@
             font-weight: 600;
         }
 
+        /* ----- PROFILE AVATAR (Mobile-First) ----- */
+        .profile-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            flex-shrink: 0;
+            background-color: #0e1e3a;
+            order: -1; /* Move to the left */
+        }
+
         .top-bar .right-actions .logout-btn {
             background: transparent;
             border: 1px solid rgba(255, 255, 255, 0.2);
             color: #ffffff;
-            padding: 7px 20px;
+            padding: 6px 16px;
             border-radius: 8px;
             font-size: 13px;
             font-weight: 500;
             cursor: pointer;
             transition: background 0.2s, border-color 0.2s;
             font-family: 'Inter', sans-serif;
+            white-space: nowrap;
         }
 
         .top-bar .right-actions .logout-btn:hover {
@@ -2387,6 +2403,51 @@
             box-shadow: 0 0 0 3px rgba(14, 30, 58, 0.08);
         }
 
+        /* custom file input for profile picture */
+        .signup-modal-content .file-upload-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+            margin-top: 4px;
+        }
+
+        .signup-modal-content .file-upload-wrapper input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .signup-modal-content .file-upload-label {
+            display: block;
+            padding: 10px 16px;
+            background: #f0f4fc;
+            border: 1px dashed #c9a84c;
+            border-radius: 8px;
+            text-align: center;
+            color: #0e1e3a;
+            font-size: 13px;
+            font-weight: 500;
+            transition: background 0.2s;
+            cursor: pointer;
+        }
+
+        .signup-modal-content .file-upload-label:hover {
+            background: #e6ebf2;
+        }
+
+        .signup-modal-content .file-upload-label .file-name {
+            display: block;
+            font-weight: 400;
+            color: #62708d;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
         .signup-modal-content .form-row-duo {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -2448,7 +2509,7 @@
         }
 
         /* ============================================================ */
-        /* MOBILE RESPONSIVENESS                                        */
+        /* MOBILE RESPONSIVENESS (Mobile-First Enhancements)             */
         /* ============================================================ */
         @media (max-width: 1024px) {
             .hero .container {
@@ -2634,10 +2695,16 @@
                 font-size: 16px;
             }
             .top-bar .right-actions .greeting {
-                display: none;
+                display: inline-block;
+                font-size: 12px;
+                white-space: nowrap;
+            }
+            .profile-avatar {
+                width: 28px;
+                height: 28px;
             }
             .top-bar .right-actions .logout-btn {
-                padding: 5px 14px;
+                padding: 4px 12px;
                 font-size: 12px;
             }
             .footer .container {
@@ -2717,6 +2784,17 @@
             .footer-page .page-content .service-grid {
                 grid-template-columns: 1fr;
             }
+            .top-bar .right-actions .greeting {
+                font-size: 10px;
+            }
+            .profile-avatar {
+                width: 24px;
+                height: 24px;
+            }
+            .top-bar .right-actions .logout-btn {
+                font-size: 10px;
+                padding: 4px 10px;
+            }
         }
     </style>
 </head>
@@ -2757,7 +2835,7 @@
                 <div class="slides">
                     <div class="slide"><img src="https://cdn.corporatefinanceinstitute.com/assets/credit-union.jpeg" alt="Modern Banking" loading="lazy" /><div class="slide-overlay"></div></div>
                     <div class="slide"><img src="https://www.argentcu.org/wp-content/uploads/AdobeStock_627493786-scaled.jpeg" alt="Accounting & Finance" loading="lazy" /><div class="slide-overlay"></div></div>
-                    <div class="slide"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRekHUz1Q_cphonpx40ZdaiFUJY9zHi1PWq_bvCVpCbL94MHjS4aOSwCIdu&s=10" alt="Financial Growth" loading="lazy" /><div class="slide-overlay"></div></div>
+                    <div class="slide"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOQOWAcgBiZHZXZVehdem4a7E1vDc85yebGBfeatr7eDvODIUwbzuetgY&s=10" alt="Financial Growth" loading="lazy" /><div class="slide-overlay"></div></div>
                     <div class="slide"><img src="https://tpfcu.com/wp-content/uploads/2021/05/a-person-withdrawing-cash-from-a-bank-teller.jpg" alt="Wealth Management" loading="lazy" /><div class="slide-overlay"></div></div>
                 </div>
             </div>
@@ -3055,7 +3133,7 @@
             <div class="page-content">
                 <p>We're here to help. Reach out to our support team via phone, email, or by filling out the form below.</p>
                 <div class="grid-2col" style="margin-bottom:24px;">
-                    <div class="card"><h4> Phone</h4><p>1-800-555-0199</p><p style="font-size:13px; color:#8b96b0;">Mon-Fri 8am-6pm EST</p></div>
+                    <div class="card"><h4>📞 Phone</h4><p>1-800-555-0199</p><p style="font-size:13px; color:#8b96b0;">Mon-Fri 8am-6pm EST</p></div>
                     <div class="card"><h4>✉ Email</h4><p>support@fidelitycu.com</p><p style="font-size:13px; color:#8b96b0;">Response within 24 hours</p></div>
                 </div>
                 <div style="background:#f8fafd; border-radius:16px; padding:28px 32px; border:1px solid #e6ebf2;">
@@ -3251,7 +3329,8 @@
                 <h1>Fidelity<span> Credit Union</span></h1>
             </div>
             <div class="right-actions">
-                <span class="greeting">Welcome, <strong id="displayName">Client</strong></span>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoUrMuKlk-NE8dMTiEQN2lxcjrTS1gRdCNm5otYV0d7LIJbQcU53BzPLs&s=10" alt="Profile Avatar" class="profile-avatar" id="profileAvatar" />
+                <span class="greeting">Welcome, <strong id="displayName">Graff Federico Adrew</strong></span>
                 <button class="logout-btn" id="logoutBtn">Sign Out</button>
             </div>
         </header>
@@ -3276,9 +3355,9 @@
                 <section class="page-section active" id="page-dashboard">
                     <div class="page-header"><h2>Dashboard</h2><p>Your financial overview at a glance</p></div>
                     <div class="stats-grid">
-                        <div class="stat-card balance-highlight"><div class="stat-label">Total Balance</div><div class="stat-value">$5,000,000.00</div><div class="stat-sub">All accounts combined</div></div>
-                        <div class="stat-card"><div class="stat-label">Checking</div><div class="stat-value">$4,250,000.00</div><div class="stat-sub">Available</div></div>
-                        <div class="stat-card"><div class="stat-label">Savings</div><div class="stat-value">$750,000.00</div><div class="stat-sub">+2.4% APY</div></div>
+                        <div class="stat-card balance-highlight"><div class="stat-label">Total Balance</div><div class="stat-value">$900,000.00</div><div class="stat-sub">All accounts combined</div></div>
+                        <div class="stat-card"><div class="stat-label">Checking</div><div class="stat-value">$765,000.00</div><div class="stat-sub">Available</div></div>
+                        <div class="stat-card"><div class="stat-label">Savings</div><div class="stat-value">$135,000.00</div><div class="stat-sub">+2.4% APY</div></div>
                         <div class="stat-card"><div class="stat-label">Credit Line</div><div class="stat-value">$0.00</div><div class="stat-sub">No outstanding</div></div>
                     </div>
                     <div class="quick-actions-grid">
@@ -3292,7 +3371,7 @@
                         <table class="transactions-table">
                             <thead><tr><th>Date</th><th>Description</th><th>Amount</th><th>Status</th></tr></thead>
                             <tbody id="recentTxBody">
-                                <tr><td>2026-08-20</td><td>Wire transfer — FCU Corporate</td><td class="amount positive">+ $2,450,000.00</td><td><span class="status-badge">Completed</span></td></tr>
+                                <tr><td>2026-08-20</td><td>Wire transfer — FCU Corporate</td><td class="amount positive">+ $450,000.00</td><td><span class="status-badge">Completed</span></td></tr>
                                 <tr><td>2026-08-19</td><td>ATM withdrawal — Branch #12</td><td class="amount negative">- $500.00</td><td><span class="status-badge">Completed</span></td></tr>
                                 <tr><td>2026-08-18</td><td>Transfer to Savings</td><td class="amount negative">- $25,000.00</td><td><span class="status-badge pending">Pending</span></td></tr>
                                 <tr><td>2026-08-17</td><td>Dividend distribution</td><td class="amount positive">+ $12,750.00</td><td><span class="status-badge">Completed</span></td></tr>
@@ -3308,7 +3387,7 @@
                         <div class="alert error" id="transferAlert"><div class="alert-icon">✕</div><div class="alert-content"><div class="alert-title" id="alertTitle">Transfer Blocked — Fraud Prevention</div><div class="alert-desc" id="alertDesc">This transfer cannot be processed. Please verify your identity or contact our security team.</div></div></div>
                         <div class="alert success" id="transferSuccess" style="display:none;"><div class="alert-icon">✓</div><div class="alert-content"><div class="alert-title">Transfer Successful</div><div class="alert-desc">Your funds have been transferred. (Simulated)</div></div></div>
                         <form id="transferForm">
-                            <div class="form-group"><label for="transferFrom">From Account</label><select id="transferFrom"><option value="checking">Checking ••••4821 — $4,250,000.00</option><option value="savings">Savings ••••7034 — $750,000.00</option></select></div>
+                            <div class="form-group"><label for="transferFrom">From Account</label><select id="transferFrom"><option value="checking">Checking ••••4821 — $765,000.00</option><option value="savings">Savings ••••7034 — $135,000.00</option></select></div>
                             <div class="form-group"><label for="transferTo">To Account / Recipient</label><select id="transferTo"><option value="external">External Account — ••••1122 (Fidelity CU)</option><option value="savings">Internal Savings ••••7034</option><option value="other">Other — ••••9900 (Third Party)</option></select></div>
                             <div class="form-row"><div class="form-group"><label for="transferAmount">Amount ($)</label><input type="number" id="transferAmount" placeholder="0.00" step="0.01" min="0.01" value="1000.00" /></div><div class="form-group"><label for="transferRef">Reference</label><input type="text" id="transferRef" placeholder="e.g. Invoice #1234" value="Payment" /></div></div>
                             <button type="submit" class="submit-btn">Submit Transfer</button>
@@ -3320,12 +3399,12 @@
                 <section class="page-section" id="page-accounts">
                     <div class="page-header"><h2>Account Details</h2><p>Verified account information for proof and reconciliation</p></div>
                     <div class="account-details-grid">
-                        <div class="account-detail-card"><div class="ad-label">Account Holder</div><div class="ad-value">Fidelity Credit Union — Client</div></div>
+                        <div class="account-detail-card"><div class="ad-label">Account Holder</div><div class="ad-value">Graff Federico Adrew</div></div>
                         <div class="account-detail-card"><div class="ad-label">Account Number</div><div class="ad-value mono">4821 9073 5612 0047 <span class="copy-hint" id="copyAccount">copy</span></div></div>
                         <div class="account-detail-card"><div class="ad-label">Routing Number</div><div class="ad-value mono">0210 0002 1</div></div>
                         <div class="account-detail-card"><div class="ad-label">Account Type</div><div class="ad-value">Premium Checking</div></div>
-                        <div class="account-detail-card"><div class="ad-label">Current Balance</div><div class="ad-value">$4,250,000.00</div></div>
-                        <div class="account-detail-card"><div class="ad-label">Available Balance</div><div class="ad-value">$4,250,000.00</div></div>
+                        <div class="account-detail-card"><div class="ad-label">Current Balance</div><div class="ad-value">$765,000.00</div></div>
+                        <div class="account-detail-card"><div class="ad-label">Available Balance</div><div class="ad-value">$765,000.00</div></div>
                     </div>
                     <div style="background:#f8fafd; border-radius:12px; padding:16px 22px; border:1px solid #e6ebf2; font-size:13px; color:#62708d; display:flex; gap:14px; flex-wrap:wrap; align-items:center;">
                         <span style="background:#0e1e3a; color:#fff; padding:4px 14px; border-radius:30px; font-size:11px; font-weight:600; letter-spacing:0.3px; text-transform:uppercase;">Verified</span>
@@ -3366,7 +3445,7 @@
                 <section class="page-section" id="page-settings">
                     <div class="page-header"><h2>Settings</h2><p>Manage your profile, security, and preferences</p></div>
                     <div class="settings-section">
-                        <div class="settings-group"><h4>Profile</h4><div class="setting-row"><span class="setting-label">Full Name</span><span class="setting-control">Client User</span></div><div class="setting-row"><span class="setting-label">Email Address</span><span class="setting-control">client@fidelitycu.com</span></div><div class="setting-row"><span class="setting-label">Phone Number</span><span class="setting-control">+1 (800) 555-0199</span></div></div>
+                        <div class="settings-group"><h4>Profile</h4><div class="setting-row"><span class="setting-label">Full Name</span><span class="setting-control">Graff Federico Adrew</span></div><div class="setting-row"><span class="setting-label">Email Address</span><span class="setting-control">graff@fidelitycu.com</span></div><div class="setting-row"><span class="setting-label">Phone Number</span><span class="setting-control">+1 (800) 555-0199</span></div></div>
                         <div class="settings-group"><h4>Security</h4><div class="setting-row"><span class="setting-label">Two-Factor Authentication</span><span class="setting-control"><span class="toggle active" id="toggle2FA"></span></span></div><div class="setting-row"><span class="setting-label">Change Password</span><span class="setting-control"><a href="#" style="color:#0e1e3a; text-decoration:none; font-weight:500;">Update</a></span></div><div class="setting-row"><span class="setting-label">Login Alerts</span><span class="setting-control"><span class="toggle active" id="toggleAlerts"></span></span></div></div>
                         <div class="settings-group"><h4>Preferences</h4><div class="setting-row"><span class="setting-label">Language</span><span class="setting-control">English (US)</span></div><div class="setting-row"><span class="setting-label">Currency Display</span><span class="setting-control">USD ($)</span></div></div>
                     </div>
@@ -3428,7 +3507,7 @@
     </div>
 
     <!-- ============================================================ -->
-    <!-- SIGNUP MODAL                                                 -->
+    <!-- SIGNUP MODAL (Enhanced with more fields and picture upload)   -->
     <!-- ============================================================ -->
     <div class="signup-modal" id="signupModal">
         <div class="signup-modal-content">
@@ -3437,12 +3516,41 @@
                 <div class="logo"><svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="5" width="90" height="90" rx="20" fill="#0e1e3a" stroke="#c9a84c" stroke-width="4"/><path d="M30 30 L70 30 L70 70 L30 70 L30 30Z" stroke="#c9a84c" stroke-width="3" fill="none"/><path d="M40 30 L40 70 M60 30 L60 70 M30 40 L70 40 M30 60 L70 60" stroke="#c9a84c" stroke-width="2" opacity="0.4"/><text x="50" y="60" font-family="Inter, sans-serif" font-size="32" font-weight="800" fill="#c9a84c" text-anchor="middle" dominant-baseline="central">F</text><text x="50" y="75" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="rgba(255,255,255,0.4)" text-anchor="middle">CREDIT UNION</text></svg></div>
                 <h2>Create Account</h2><p>Join Fidelity Credit Union</p>
             </div>
-            <form id="signupFormModal" autocomplete="off">
-                <div class="form-group"><label for="signupNameModal">Full Name</label><input type="text" id="signupNameModal" name="sname" placeholder="John Doe" autocomplete="off" /></div>
-                <div class="form-group"><label for="signupEmailModal">Email Address</label><input type="email" id="signupEmailModal" name="semail" placeholder="john@example.com" autocomplete="off" /></div>
-                <div class="form-row-duo"><div class="form-group"><label for="signupUserModal">Username</label><input type="text" id="signupUserModal" name="suser" placeholder="Choose username" autocomplete="off" /></div><div class="form-group"><label for="signupPassModal">Password</label><input type="password" id="signupPassModal" name="spass" placeholder="Create password" autocomplete="new-password" /></div></div>
+            <form id="signupFormModal" autocomplete="off" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="signupNameModal">Full Name <span class="required">*</span></label>
+                    <input type="text" id="signupNameModal" name="sname" placeholder="John Doe" autocomplete="off" />
+                </div>
+                <div class="form-group">
+                    <label for="signupEmailModal">Email Address <span class="required">*</span></label>
+                    <input type="email" id="signupEmailModal" name="semail" placeholder="john@example.com" autocomplete="off" />
+                </div>
+                <div class="form-group">
+                    <label for="signupPhoneModal">Phone Number</label>
+                    <input type="tel" id="signupPhoneModal" name="sphone" placeholder="+1 234 567 8900" autocomplete="off" />
+                </div>
+                <div class="form-row-duo">
+                    <div class="form-group">
+                        <label for="signupUserModal">Username <span class="required">*</span></label>
+                        <input type="text" id="signupUserModal" name="suser" placeholder="Choose username" autocomplete="off" />
+                    </div>
+                    <div class="form-group">
+                        <label for="signupPassModal">Password <span class="required">*</span></label>
+                        <input type="password" id="signupPassModal" name="spass" placeholder="Create password" autocomplete="new-password" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Profile Picture</label>
+                    <div class="file-upload-wrapper">
+                        <input type="file" id="signupAvatarModal" accept="image/*" />
+                        <div class="file-upload-label" id="fileUploadLabel">
+                            <span>Choose an image</span>
+                            <span class="file-name" id="fileNameDisplay">No file chosen</span>
+                        </div>
+                    </div>
+                </div>
                 <button type="submit" class="login-btn">Create Account</button>
-                <div class="signup-error" id="signupModalError">Please fill in all fields.</div>
+                <div class="signup-error" id="signupModalError">Please fill in all required fields.</div>
             </form>
             <div class="signup-footer">Already have an account? <a id="switchToLoginBtn">Sign In</a></div>
         </div>
@@ -3558,11 +3666,22 @@
         (function() {
             'use strict';
 
-            let registeredUsers = [{ username: 'client', password: 'password' }];
+            // ---- UPDATED: Default user with strong credentials and fullName ----
+            let registeredUsers = [
+                { 
+                    username: 'Primeshield', 
+                    password: 'Shukapex2019', 
+                    fullName: 'Graff Federico Adrew',
+                    email: 'graff@fidelitycu.com',
+                    phone: '+1 (800) 555-0199',
+                    avatar: null // will store base64 if uploaded
+                }
+            ];
+
             // ---- Transaction Data (42 items) ----
             const allTransactions = [
                 { date: '2026-08-20', desc: 'Wire transfer — FCU Corporate', account: 'Checking',
-                amount: 2450000, status: 'Completed', type: 'deposit' },
+                amount: 450000, status: 'Completed', type: 'deposit' },
                 { date: '2026-08-19', desc: 'ATM withdrawal — Branch #12', account: 'Checking', amount: -500,
                     status: 'Completed', type: 'withdrawal' },
                 { date: '2026-08-18', desc: 'Transfer to Savings', account: 'Checking', amount: -25000,
@@ -3687,6 +3806,7 @@
             const ctaOpenAccount = document.getElementById('ctaOpenAccount');
             const logoutBtn = document.getElementById('logoutBtn');
             const displayName = document.getElementById('displayName');
+            const profileAvatar = document.getElementById('profileAvatar');
             const fullTxBody = document.getElementById('fullTxBody');
             const paginationButtons = document.getElementById('paginationButtons');
             const txRangeInfo = document.getElementById('txRangeInfo');
@@ -3696,6 +3816,25 @@
             const transferAlert = document.getElementById('transferAlert');
             const transferSuccess = document.getElementById('transferSuccess');
             const transferForm = document.getElementById('transferForm');
+
+            // signup extra fields
+            const signupName = document.getElementById('signupNameModal');
+            const signupEmail = document.getElementById('signupEmailModal');
+            const signupPhone = document.getElementById('signupPhoneModal');
+            const signupUser = document.getElementById('signupUserModal');
+            const signupPass = document.getElementById('signupPassModal');
+            const signupAvatarInput = document.getElementById('signupAvatarModal');
+            const fileNameDisplay = document.getElementById('fileNameDisplay');
+
+            // ---- File upload label update ----
+            signupAvatarInput.addEventListener('change', function(e) {
+                const file = this.files[0];
+                if (file) {
+                    fileNameDisplay.textContent = file.name;
+                } else {
+                    fileNameDisplay.textContent = 'No file chosen';
+                }
+            });
 
             let currentPage = 1;
             const pageSize = 7;
@@ -3784,6 +3923,18 @@
                 return `<span class="status-badge ${cls}">${status}</span>`;
             }
 
+            function updateAvatarAndName(fullName, avatarData) {
+                displayName.textContent = fullName;
+                if (avatarData) {
+                    profileAvatar.src = avatarData;
+                } else {
+                    // fallback to generated avatar
+                    const encodedName = encodeURIComponent(fullName || 'Graff Federico Adrew');
+                    profileAvatar.src =
+                        `https://www.everypixel.com/preview_collections/20231129/people_of_the_world_vol.3_49`;
+                }
+            }
+
             // ---- Login ----
             function doLogin(username, password) {
                 const found = registeredUsers.find(u =>
@@ -3797,7 +3948,9 @@
                     const app = document.getElementById('appContainer');
                     app.classList.add('visible');
                     app.style.display = 'flex';
-                    displayName.textContent = username;
+                    // Update greeting, avatar, and profile data
+                    updateAvatarAndName(found.fullName, found.avatar);
+                    // Also update settings if needed (we'll keep them static for demo)
                     loginOverlay.classList.remove('visible');
                     renderFullTransactions(1);
                     renderNotifications();
@@ -3819,6 +3972,8 @@
                 loginError.classList.remove('visible');
                 loginUser.value = '';
                 loginPass.value = '';
+                // Reset to default avatar/name when showing login
+                updateAvatarAndName('Graff Federico Adrew', null);
             }
 
             function hideLogin() { loginOverlay.classList.remove('visible'); }
@@ -3831,10 +3986,13 @@
             function openSignupModal() {
                 signupModal.classList.add('active');
                 signupModalError.style.display = 'none';
-                document.getElementById('signupNameModal').value = '';
-                document.getElementById('signupEmailModal').value = '';
-                document.getElementById('signupUserModal').value = '';
-                document.getElementById('signupPassModal').value = '';
+                signupName.value = '';
+                signupEmail.value = '';
+                signupPhone.value = '';
+                signupUser.value = '';
+                signupPass.value = '';
+                signupAvatarInput.value = '';
+                fileNameDisplay.textContent = 'No file chosen';
                 hideLogin();
             }
 
@@ -3851,15 +4009,17 @@
                 showLogin(); });
             signupModal.addEventListener('click', function(e) { if (e.target === signupModal) closeSignupModalFunc(); });
 
+            // ---- Enhanced Signup submission with avatar ----
             signupFormModal.addEventListener('submit', function(e) {
                 e.preventDefault();
-                const name = document.getElementById('signupNameModal').value.trim();
-                const email = document.getElementById('signupEmailModal').value.trim();
-                const username = document.getElementById('signupUserModal').value.trim();
-                const password = document.getElementById('signupPassModal').value.trim();
+                const name = signupName.value.trim();
+                const email = signupEmail.value.trim();
+                const phone = signupPhone.value.trim();
+                const username = signupUser.value.trim();
+                const password = signupPass.value.trim();
                 if (!name || !email || !username || !password) {
                     signupModalError.style.display = 'block';
-                    signupModalError.textContent = 'Please fill in all fields.';
+                    signupModalError.textContent = 'Please fill in all required fields.';
                     return;
                 }
                 if (registeredUsers.some(u => u.username.toLowerCase() === username.toLowerCase())) {
@@ -3867,13 +4027,37 @@
                     signupModalError.textContent = 'Username already taken. Please choose another.';
                     return;
                 }
-                registeredUsers.push({ username, password });
+                // Handle avatar upload
+                const file = signupAvatarInput.files[0];
+                let avatarData = null;
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        avatarData = event.target.result;
+                        // Now register the user with avatar
+                        registerUser(username, password, name, email, phone, avatarData);
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    // No avatar selected
+                    registerUser(username, password, name, email, phone, null);
+                }
+            });
+
+            function registerUser(username, password, name, email, phone, avatar) {
+                // Check again for duplicate (safety)
+                if (registeredUsers.some(u => u.username.toLowerCase() === username.toLowerCase())) {
+                    signupModalError.style.display = 'block';
+                    signupModalError.textContent = 'Username already taken. Please choose another.';
+                    return;
+                }
+                registeredUsers.push({ username, password, fullName: name, email, phone, avatar });
                 signupModalError.style.display = 'none';
                 closeSignupModalFunc();
                 loginUser.value = username;
                 loginPass.value = password;
                 doLogin(username, password);
-            });
+            }
 
             logoutBtn.addEventListener('click', function() {
                 const app = document.getElementById('appContainer');
@@ -3883,6 +4067,8 @@
                 document.querySelectorAll('.footer-page').forEach(p => p.style.display = 'none');
                 loginUser.value = '';
                 loginPass.value = '';
+                // Reset to default profile on logout
+                updateAvatarAndName('Graff Federico Adrew', null);
                 showLogin();
             });
 
@@ -3944,14 +4130,11 @@
             // ---- Transfer Fraud Alert with auto-dismiss ----
             transferForm.addEventListener('submit', function(e) {
                 e.preventDefault();
-                // Clear any existing timeout
                 if (transferTimeout) {
                     clearTimeout(transferTimeout);
                     transferTimeout = null;
                 }
-                // Hide success alert if visible
                 transferSuccess.style.display = 'none';
-                // Show error alert
                 transferAlert.style.display = 'flex';
                 const amount = document.getElementById('transferAmount').value || '0.00';
                 const from = document.getElementById('transferFrom');
@@ -3964,8 +4147,6 @@
                 const btn = this.querySelector('.submit-btn');
                 btn.textContent = 'Declined';
                 btn.style.background = '#b33a3a';
-
-                // Auto-dismiss after 4 seconds
                 transferTimeout = setTimeout(() => {
                     transferAlert.style.display = 'none';
                     btn.textContent = 'Submit Transfer';
@@ -4036,11 +4217,12 @@
             document.getElementById('appContainer').style.display = 'none';
             document.querySelectorAll('.footer-page').forEach(p => p.style.display = 'none');
 
-            console.log('Fidelity Credit Union — Transfer alert now auto-dismisses!');
-            console.log('Default login: client / password');
+            console.log('Fidelity Credit Union — Transfer alert auto-dismisses!');
+            console.log('Default credentials:');
+            console.log('  Username: Primeshield');
+            console.log('  Password: Shukapex2019');
 
         })();
     </script>
-
 </body>
 </html>
