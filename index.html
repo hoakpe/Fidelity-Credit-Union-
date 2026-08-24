@@ -1060,7 +1060,7 @@
             border: 2px solid rgba(255, 255, 255, 0.25);
             flex-shrink: 0;
             background-color: #0e1e3a;
-            order: -1; /* Move to the left */
+            order: -1;
         }
 
         .top-bar .right-actions .logout-btn {
@@ -1438,7 +1438,7 @@
 
         /* ----- TRANSFER FORM ----- */
         .transfer-form {
-            max-width: 640px;
+            max-width: 680px;
             background: #fafcff;
             border-radius: 16px;
             border: 1px solid #e6ebf2;
@@ -1605,7 +1605,7 @@
             border-bottom-color: #0e1e3a;
         }
 
-        /* ----- LOANS & CARDS ----- */
+        /* ----- LOANS & CARDS (Dashboard) - these will be dynamically filled) ----- */
         .loan-card-dash,
         .credit-card-dash {
             background: #fafcff;
@@ -1667,6 +1667,29 @@
 
         .credit-card-dash.platinum .card-balance .sub {
             color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Empty state for loans/cards */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #8b96b0;
+        }
+
+        .empty-state .empty-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+            opacity: 0.3;
+        }
+
+        .empty-state h3 {
+            font-size: 18px;
+            color: #3e4a66;
+            margin-bottom: 6px;
+        }
+
+        .empty-state p {
+            font-size: 14px;
         }
 
         /* ----- SETTINGS ----- */
@@ -2386,7 +2409,8 @@
             margin-bottom: 4px;
         }
 
-        .signup-modal-content .form-group input {
+        .signup-modal-content .form-group input,
+        .signup-modal-content .form-group select {
             width: 100%;
             padding: 12px 16px;
             border: 1px solid #d6ddee;
@@ -2397,7 +2421,8 @@
             background: #fafcff;
         }
 
-        .signup-modal-content .form-group input:focus {
+        .signup-modal-content .form-group input:focus,
+        .signup-modal-content .form-group select:focus {
             outline: none;
             border-color: #0e1e3a;
             box-shadow: 0 0 0 3px rgba(14, 30, 58, 0.08);
@@ -3354,11 +3379,9 @@
                 <!-- DASHBOARD PAGE -->
                 <section class="page-section active" id="page-dashboard">
                     <div class="page-header"><h2>Dashboard</h2><p>Your financial overview at a glance</p></div>
-                    <div class="stats-grid">
-                        <div class="stat-card balance-highlight"><div class="stat-label">Total Balance</div><div class="stat-value">$900,000.00</div><div class="stat-sub">All accounts combined</div></div>
-                        <div class="stat-card"><div class="stat-label">Checking</div><div class="stat-value">$765,000.00</div><div class="stat-sub">Available</div></div>
-                        <div class="stat-card"><div class="stat-label">Savings</div><div class="stat-value">$135,000.00</div><div class="stat-sub">+2.4% APY</div></div>
-                        <div class="stat-card"><div class="stat-label">Credit Line</div><div class="stat-value">$0.00</div><div class="stat-sub">No outstanding</div></div>
+                    <!-- Dynamic stats filled by JS -->
+                    <div class="stats-grid" id="dashboardStats">
+                        <!-- filled by JS -->
                     </div>
                     <div class="quick-actions-grid">
                         <button class="quick-action-btn" data-page="transfer"><div class="action-label">Transfer Funds</div><div class="action-desc">Move money</div></button>
@@ -3371,10 +3394,7 @@
                         <table class="transactions-table">
                             <thead><tr><th>Date</th><th>Description</th><th>Amount</th><th>Status</th></tr></thead>
                             <tbody id="recentTxBody">
-                                <tr><td>2026-08-20</td><td>Wire transfer — FCU Corporate</td><td class="amount positive">+ $450,000.00</td><td><span class="status-badge">Completed</span></td></tr>
-                                <tr><td>2026-08-19</td><td>ATM withdrawal — Branch #12</td><td class="amount negative">- $500.00</td><td><span class="status-badge">Completed</span></td></tr>
-                                <tr><td>2026-08-18</td><td>Transfer to Savings</td><td class="amount negative">- $25,000.00</td><td><span class="status-badge pending">Pending</span></td></tr>
-                                <tr><td>2026-08-17</td><td>Dividend distribution</td><td class="amount positive">+ $12,750.00</td><td><span class="status-badge">Completed</span></td></tr>
+                                <!-- filled by JS -->
                             </tbody>
                         </table>
                     </div>
@@ -3387,9 +3407,38 @@
                         <div class="alert error" id="transferAlert"><div class="alert-icon">✕</div><div class="alert-content"><div class="alert-title" id="alertTitle">Transfer Blocked — Fraud Prevention</div><div class="alert-desc" id="alertDesc">This transfer cannot be processed. Please verify your identity or contact our security team.</div></div></div>
                         <div class="alert success" id="transferSuccess" style="display:none;"><div class="alert-icon">✓</div><div class="alert-content"><div class="alert-title">Transfer Successful</div><div class="alert-desc">Your funds have been transferred. (Simulated)</div></div></div>
                         <form id="transferForm">
-                            <div class="form-group"><label for="transferFrom">From Account</label><select id="transferFrom"><option value="checking">Checking ••••4821 — $765,000.00</option><option value="savings">Savings ••••7034 — $135,000.00</option></select></div>
-                            <div class="form-group"><label for="transferTo">To Account / Recipient</label><select id="transferTo"><option value="external">External Account — ••••1122 (Fidelity CU)</option><option value="savings">Internal Savings ••••7034</option><option value="other">Other — ••••9900 (Third Party)</option></select></div>
-                            <div class="form-row"><div class="form-group"><label for="transferAmount">Amount ($)</label><input type="number" id="transferAmount" placeholder="0.00" step="0.01" min="0.01" value="1000.00" /></div><div class="form-group"><label for="transferRef">Reference</label><input type="text" id="transferRef" placeholder="e.g. Invoice #1234" value="Payment" /></div></div>
+                            <div class="form-group">
+                                <label for="transferFrom">From Account</label>
+                                <select id="transferFrom">
+                                    <option value="checking">Checking ••••4821 — <span id="checkingBalanceDisplay">$765,000.00</span></option>
+                                    <option value="savings">Savings ••••7034 — <span id="savingsBalanceDisplay">$135,000.00</span></option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="transferTo">To Account / Recipient</label>
+                                <select id="transferTo">
+                                    <option value="external">External Account — ••••1122 (Fidelity CU)</option>
+                                    <option value="savings">Internal Savings ••••7034</option>
+                                    <option value="other">Other — ••••9900 (Third Party)</option>
+                                    <option value="manual">Enter Account Number Manually</option>
+                                </select>
+                            </div>
+                            <!-- Manual account number input (hidden by default) -->
+                            <div class="form-group" id="manualAccountGroup" style="display:none;">
+                                <label for="manualAccountNumber">Account Number</label>
+                                <input type="text" id="manualAccountNumber" placeholder="Enter the account number (e.g. 4821 9073 5612 0047)" />
+                                <div style="font-size:12px; color:#8b96b0; margin-top:4px;">Enter the full account number of the recipient</div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="transferAmount">Amount ($)</label>
+                                    <input type="number" id="transferAmount" placeholder="0.00" step="0.01" min="0.01" value="1000.00" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="transferRef">Reference</label>
+                                    <input type="text" id="transferRef" placeholder="e.g. Invoice #1234" value="Payment" />
+                                </div>
+                            </div>
                             <button type="submit" class="submit-btn">Submit Transfer</button>
                         </form>
                     </div>
@@ -3398,13 +3447,8 @@
                 <!-- ACCOUNTS PAGE -->
                 <section class="page-section" id="page-accounts">
                     <div class="page-header"><h2>Account Details</h2><p>Verified account information for proof and reconciliation</p></div>
-                    <div class="account-details-grid">
-                        <div class="account-detail-card"><div class="ad-label">Account Holder</div><div class="ad-value">Graff Federico Adrew</div></div>
-                        <div class="account-detail-card"><div class="ad-label">Account Number</div><div class="ad-value mono">4821 9073 5612 0047 <span class="copy-hint" id="copyAccount">copy</span></div></div>
-                        <div class="account-detail-card"><div class="ad-label">Routing Number</div><div class="ad-value mono">0210 0002 1</div></div>
-                        <div class="account-detail-card"><div class="ad-label">Account Type</div><div class="ad-value">Premium Checking</div></div>
-                        <div class="account-detail-card"><div class="ad-label">Current Balance</div><div class="ad-value">$765,000.00</div></div>
-                        <div class="account-detail-card"><div class="ad-label">Available Balance</div><div class="ad-value">$765,000.00</div></div>
+                    <div class="account-details-grid" id="accountDetailsGrid">
+                        <!-- filled by JS -->
                     </div>
                     <div style="background:#f8fafd; border-radius:12px; padding:16px 22px; border:1px solid #e6ebf2; font-size:13px; color:#62708d; display:flex; gap:14px; flex-wrap:wrap; align-items:center;">
                         <span style="background:#0e1e3a; color:#fff; padding:4px 14px; border-radius:30px; font-size:11px; font-weight:600; letter-spacing:0.3px; text-transform:uppercase;">Verified</span>
@@ -3422,30 +3466,31 @@
                     </div>
                     <div class="transactions-table-wrap">
                         <table class="transactions-table"><thead><tr><th>Date</th><th>Description</th><th>Account</th><th>Amount</th><th>Status</th></tr></thead><tbody id="fullTxBody"></tbody></table>
-                        <div class="table-pagination"><span id="txRangeInfo">Showing 1-7 of 42 transactions</span><div class="pagination-buttons" id="paginationButtons"></div></div>
+                        <div class="table-pagination"><span id="txRangeInfo">Showing 0-0 of 0 transactions</span><div class="pagination-buttons" id="paginationButtons"></div></div>
                     </div>
                 </section>
 
-                <!-- LOANS PAGE (Dashboard) -->
+                <!-- LOANS PAGE (Dashboard) - Dynamic -->
                 <section class="page-section" id="page-loans">
                     <div class="page-header"><h2>Loan Management</h2><p>View and manage your loans with Fidelity Credit Union</p></div>
-                    <div class="loan-card-dash"><div class="loan-info"><div class="loan-name">Auto Loan — 2024 Sedan</div><div class="loan-detail">Loan # 7843-02 · Term 48 months · Rate 4.2%</div></div><div class="loan-amount">$18,245.32 <span class="sub">remaining</span><div style="font-weight:400; font-size:13px; color:#62708d;">Next payment: 2026-09-01</div></div></div>
-                    <div class="loan-card-dash"><div class="loan-info"><div class="loan-name">Mortgage — Fixed 30-year</div><div class="loan-detail">Loan # 9321-10 · Term 360 months · Rate 3.75%</div></div><div class="loan-amount">$312,450.80 <span class="sub">remaining</span><div style="font-weight:400; font-size:13px; color:#62708d;">Next payment: 2026-09-15</div></div></div>
-                    <div class="loan-card-dash" style="background:#f4f7fc; border-color:#d6ddee;"><div class="loan-info"><div class="loan-name">Personal Loan — Home Improvement</div><div class="loan-detail">Loan # 5678-21 · Term 24 months · Rate 6.0%</div></div><div class="loan-amount">$8,500.00 <span class="sub">remaining</span><div style="font-weight:400; font-size:13px; color:#62708d;">Next payment: 2026-08-25</div></div></div>
+                    <div id="loansContainer">
+                        <!-- filled by JS -->
+                    </div>
                 </section>
 
-                <!-- CREDIT CARDS PAGE (Dashboard) -->
+                <!-- CREDIT CARDS PAGE (Dashboard) - Dynamic -->
                 <section class="page-section" id="page-cards">
                     <div class="page-header"><h2>Credit Cards</h2><p>Manage your Fidelity Credit Union credit cards</p></div>
-                    <div class="credit-card-dash platinum"><div class="card-info"><div class="card-name">Platinum Rewards Card</div><div class="card-detail">•••• 4821  •  Exp 09/28</div><div style="margin-top:5px; font-size:12px; color:rgba(255,255,255,0.5);">Credit limit: $50,000</div></div><div class="card-balance">$3,240.50 <span class="sub">balance</span><div style="font-weight:400; font-size:13px; color:rgba(255,255,255,0.5);">Available: $46,759.50</div></div></div>
-                    <div class="credit-card-dash" style="background:#fafcff; border:1px solid #e6ebf2;"><div class="card-info"><div class="card-name">Business Advantage Card</div><div class="card-detail">•••• 7753  •  Exp 12/27</div><div style="margin-top:5px; font-size:12px; color:#62708d;">Credit limit: $100,000</div></div><div class="card-balance">$12,830.00 <span class="sub">balance</span><div style="font-weight:400; font-size:13px; color:#62708d;">Available: $87,170.00</div></div></div>
+                    <div id="cardsContainer">
+                        <!-- filled by JS -->
+                    </div>
                 </section>
 
                 <!-- SETTINGS PAGE (Dashboard) -->
                 <section class="page-section" id="page-settings">
                     <div class="page-header"><h2>Settings</h2><p>Manage your profile, security, and preferences</p></div>
                     <div class="settings-section">
-                        <div class="settings-group"><h4>Profile</h4><div class="setting-row"><span class="setting-label">Full Name</span><span class="setting-control">Graff Federico Adrew</span></div><div class="setting-row"><span class="setting-label">Email Address</span><span class="setting-control">graff@fidelitycu.com</span></div><div class="setting-row"><span class="setting-label">Phone Number</span><span class="setting-control">+1 (800) 555-0199</span></div></div>
+                        <div class="settings-group"><h4>Profile</h4><div class="setting-row"><span class="setting-label">Full Name</span><span class="setting-control" id="settingsFullName">Graff Federico Adrew</span></div><div class="setting-row"><span class="setting-label">Email Address</span><span class="setting-control" id="settingsEmail">graff@fidelitycu.com</span></div><div class="setting-row"><span class="setting-label">Phone Number</span><span class="setting-control" id="settingsPhone">+1 (800) 555-0199</span></div></div>
                         <div class="settings-group"><h4>Security</h4><div class="setting-row"><span class="setting-label">Two-Factor Authentication</span><span class="setting-control"><span class="toggle active" id="toggle2FA"></span></span></div><div class="setting-row"><span class="setting-label">Change Password</span><span class="setting-control"><a href="#" style="color:#0e1e3a; text-decoration:none; font-weight:500;">Update</a></span></div><div class="setting-row"><span class="setting-label">Login Alerts</span><span class="setting-control"><span class="toggle active" id="toggleAlerts"></span></span></div></div>
                         <div class="settings-group"><h4>Preferences</h4><div class="setting-row"><span class="setting-label">Language</span><span class="setting-control">English (US)</span></div><div class="setting-row"><span class="setting-label">Currency Display</span><span class="setting-control">USD ($)</span></div></div>
                     </div>
@@ -3507,7 +3552,7 @@
     </div>
 
     <!-- ============================================================ -->
-    <!-- SIGNUP MODAL (Enhanced with more fields and picture upload)   -->
+    <!-- SIGNUP MODAL (Enhanced with Account Type selection)           -->
     <!-- ============================================================ -->
     <div class="signup-modal" id="signupModal">
         <div class="signup-modal-content">
@@ -3528,6 +3573,17 @@
                 <div class="form-group">
                     <label for="signupPhoneModal">Phone Number</label>
                     <input type="tel" id="signupPhoneModal" name="sphone" placeholder="+1 234 567 8900" autocomplete="off" />
+                </div>
+                <div class="form-group">
+                    <label for="signupAccountType">Account Type <span class="required">*</span></label>
+                    <select id="signupAccountType" name="saccounttype">
+                        <option value="Checking">Checking</option>
+                        <option value="Savings">Savings</option>
+                        <option value="Premium Checking" selected>Premium Checking</option>
+                        <option value="Business">Business</option>
+                        <option value="Student">Student</option>
+                        <option value="Joint">Joint</option>
+                    </select>
                 </div>
                 <div class="form-row-duo">
                     <div class="form-group">
@@ -3662,26 +3718,31 @@
             document.querySelectorAll('.nav-item[data-page="' + pageId + '"]').forEach(n => n.classList.add('active'));
         }
 
+        // ---- Utility: Generate unique account number ----
+        function generateAccountNumber() {
+            const parts = [];
+            for (let i = 0; i < 4; i++) {
+                parts.push(String(Math.floor(1000 + Math.random() * 9000)));
+            }
+            return parts.join(' ');
+        }
+
+        function generateRoutingNumber() {
+            const parts = [];
+            for (let i = 0; i < 3; i++) {
+                parts.push(String(Math.floor(1000 + Math.random() * 9000)));
+            }
+            return parts.join(' ');
+        }
+
         // ---- Login / Signup Logic ----
         (function() {
             'use strict';
 
-            // ---- UPDATED: Default user with strong credentials and fullName ----
-            let registeredUsers = [
-                { 
-                    username: 'Primeshield', 
-                    password: 'Shukapex2019', 
-                    fullName: 'Graff Federico Adrew',
-                    email: 'graff@fidelitycu.com',
-                    phone: '+1 (800) 555-0199',
-                    avatar: null // will store base64 if uploaded
-                }
-            ];
-
-            // ---- Transaction Data (42 items) ----
-            const allTransactions = [
+            // ---- DEMO TRANSACTIONS (for the default user) ----
+            const demoTransactions = [
                 { date: '2026-08-20', desc: 'Wire transfer — FCU Corporate', account: 'Checking',
-                amount: 450000, status: 'Completed', type: 'deposit' },
+                    amount: 450000, status: 'Completed', type: 'deposit' },
                 { date: '2026-08-19', desc: 'ATM withdrawal — Branch #12', account: 'Checking', amount: -500,
                     status: 'Completed', type: 'withdrawal' },
                 { date: '2026-08-18', desc: 'Transfer to Savings', account: 'Checking', amount: -25000,
@@ -3766,7 +3827,47 @@
                     status: 'Completed', type: 'deposit' },
             ];
 
-            // ---- Notifications ----
+            // ---- Demo Loans & Cards ----
+            const demoLoans = [
+                { name: 'Auto Loan — 2024 Sedan', detail: 'Loan # 7843-02 · Term 48 months · Rate 4.2%', amount: 18245.32,
+                    nextPayment: '2026-09-01' },
+                { name: 'Mortgage — Fixed 30-year', detail: 'Loan # 9321-10 · Term 360 months · Rate 3.75%',
+                    amount: 312450.80, nextPayment: '2026-09-15' },
+                { name: 'Personal Loan — Home Improvement', detail: 'Loan # 5678-21 · Term 24 months · Rate 6.0%',
+                    amount: 8500.00, nextPayment: '2026-08-25' }
+            ];
+
+            const demoCreditCards = [
+                { name: 'Platinum Rewards Card', detail: '•••• 4821  •  Exp 09/28', limit: 50000, balance: 3240.50,
+                    available: 46759.50, platinum: true },
+                { name: 'Business Advantage Card', detail: '•••• 7753  •  Exp 12/27', limit: 100000, balance: 12830.00,
+                    available: 87170.00, platinum: false }
+            ];
+
+            // ---- Default user with demo data ----
+            const defaultUser = {
+                username: 'Primeshield',
+                password: 'Shukapex2019',
+                fullName: 'Graff Federico Adrew',
+                email: 'graff@fidelitycu.com',
+                phone: '+1 (800) 555-0199',
+                avatar: null,
+                accountNumber: '4821 9073 5612 0047',
+                routingNumber: '0210 0002 1',
+                accountType: 'Premium Checking',
+                balances: { checking: 765000, savings: 135000, total: 900000 },
+                transactions: demoTransactions,
+                loans: demoLoans,
+                cards: demoCreditCards
+            };
+
+            // ---- Registered users (starts with default user) ----
+            let registeredUsers = [defaultUser];
+
+            // ---- Current logged-in user ----
+            let currentUser = null;
+
+            // ---- Notifications (shared for demo) ----
             const notifications = [
                 { id: 1, type: 'alert', title: 'Transfer Alert — Fraud Prevention',
                     desc: 'A transfer of $1,000.00 was blocked due to suspicious activity.', time: '2026-08-20 14:32',
@@ -3816,11 +3917,25 @@
             const transferAlert = document.getElementById('transferAlert');
             const transferSuccess = document.getElementById('transferSuccess');
             const transferForm = document.getElementById('transferForm');
+            const recentTxBody = document.getElementById('recentTxBody');
+            const dashboardStats = document.getElementById('dashboardStats');
+            const accountDetailsGrid = document.getElementById('accountDetailsGrid');
+            const checkingBalanceDisplay = document.getElementById('checkingBalanceDisplay');
+            const savingsBalanceDisplay = document.getElementById('savingsBalanceDisplay');
+            const settingsFullName = document.getElementById('settingsFullName');
+            const settingsEmail = document.getElementById('settingsEmail');
+            const settingsPhone = document.getElementById('settingsPhone');
+            const loansContainer = document.getElementById('loansContainer');
+            const cardsContainer = document.getElementById('cardsContainer');
+            const transferTo = document.getElementById('transferTo');
+            const manualAccountGroup = document.getElementById('manualAccountGroup');
+            const manualAccountNumber = document.getElementById('manualAccountNumber');
 
             // signup extra fields
             const signupName = document.getElementById('signupNameModal');
             const signupEmail = document.getElementById('signupEmailModal');
             const signupPhone = document.getElementById('signupPhoneModal');
+            const signupAccountType = document.getElementById('signupAccountType');
             const signupUser = document.getElementById('signupUserModal');
             const signupPass = document.getElementById('signupPassModal');
             const signupAvatarInput = document.getElementById('signupAvatarModal');
@@ -3836,21 +3951,184 @@
                 }
             });
 
+            // ---- Toggle manual account input ----
+            transferTo.addEventListener('change', function() {
+                if (this.value === 'manual') {
+                    manualAccountGroup.style.display = 'block';
+                } else {
+                    manualAccountGroup.style.display = 'none';
+                }
+            });
+
             let currentPage = 1;
             const pageSize = 7;
-            let filteredTransactions = [...allTransactions];
+            let filteredTransactions = [];
             let transferTimeout = null;
 
-            // ---- Render Functions ----
+            // ---- Render Functions (user-specific) ----
+            function renderDashboard() {
+                if (!currentUser) return;
+                const b = currentUser.balances;
+                const total = b.total || 0;
+                const checking = b.checking || 0;
+                const savings = b.savings || 0;
+
+                dashboardStats.innerHTML = `
+                    <div class="stat-card balance-highlight">
+                        <div class="stat-label">Total Balance</div>
+                        <div class="stat-value">$${total.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</div>
+                        <div class="stat-sub">All accounts combined</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Checking</div>
+                        <div class="stat-value">$${checking.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</div>
+                        <div class="stat-sub">Available</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Savings</div>
+                        <div class="stat-value">$${savings.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</div>
+                        <div class="stat-sub">+2.4% APY</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Credit Line</div>
+                        <div class="stat-value">$0.00</div>
+                        <div class="stat-sub">No outstanding</div>
+                    </div>
+                `;
+
+                // Update transfer dropdowns
+                if (checkingBalanceDisplay) {
+                    checkingBalanceDisplay.textContent = '$' + checking.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                }
+                if (savingsBalanceDisplay) {
+                    savingsBalanceDisplay.textContent = '$' + savings.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                }
+
+                // Update recent transactions (last 4)
+                const recent = currentUser.transactions.slice(-4).reverse();
+                recentTxBody.innerHTML = recent.length === 0 ?
+                    `<tr><td colspan="4" style="text-align:center; padding:24px; color:#8b96b0;">No transactions yet</td></tr>` :
+                    recent.map(tx => `
+                        <tr>
+                            <td>${tx.date}</td>
+                            <td>${tx.desc}</td>
+                            <td class="amount ${tx.amount >= 0 ? 'positive' : 'negative'}">${formatCurrency(tx.amount)}</td>
+                            <td>${statusBadge(tx.status)}</td>
+                        </tr>
+                    `).join('');
+
+                // Update Account Details with unique user data
+                accountDetailsGrid.innerHTML = `
+                    <div class="account-detail-card"><div class="ad-label">Account Holder</div><div class="ad-value">${currentUser.fullName}</div></div>
+                    <div class="account-detail-card"><div class="ad-label">Account Number</div><div class="ad-value mono">${currentUser.accountNumber || 'Not assigned'} <span class="copy-hint" id="copyAccount">copy</span></div></div>
+                    <div class="account-detail-card"><div class="ad-label">Routing Number</div><div class="ad-value mono">${currentUser.routingNumber || 'Not assigned'}</div></div>
+                    <div class="account-detail-card"><div class="ad-label">Account Type</div><div class="ad-value">${currentUser.accountType || 'Standard'}</div></div>
+                    <div class="account-detail-card"><div class="ad-label">Current Balance</div><div class="ad-value">$${checking.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</div></div>
+                    <div class="account-detail-card"><div class="ad-label">Available Balance</div><div class="ad-value">$${checking.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</div></div>
+                `;
+
+                // Re-attach copy handler
+                const copyEl = document.getElementById('copyAccount');
+                if (copyEl) {
+                    copyEl.addEventListener('click', function() {
+                        const accountNum = currentUser.accountNumber || '4821907356120047';
+                        const cleanNum = accountNum.replace(/\s/g, '');
+                        if (navigator.clipboard && navigator.clipboard.writeText) {
+                            navigator.clipboard.writeText(cleanNum).then(() => {
+                                const orig = this.textContent;
+                                this.textContent = 'copied!';
+                                setTimeout(() => { this.textContent = orig; }, 1500);
+                            }).catch(() => copyFallback(cleanNum));
+                        } else {
+                            copyFallback(cleanNum);
+                        }
+                    });
+                }
+
+                // Update Settings
+                if (settingsFullName) settingsFullName.textContent = currentUser.fullName;
+                if (settingsEmail) settingsEmail.textContent = currentUser.email;
+                if (settingsPhone) settingsPhone.textContent = currentUser.phone;
+
+                // Update transfer dropdown options with current balances
+                const fromSelect = document.getElementById('transferFrom');
+                if (fromSelect) {
+                    fromSelect.innerHTML = `
+                        <option value="checking">Checking ••••${(currentUser.accountNumber || '').slice(-4) || '4821'} — $${checking.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</option>
+                        <option value="savings">Savings ••••${(currentUser.savingsAccountNumber || '').slice(-4) || '7034'} — $${savings.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</option>
+                    `;
+                }
+
+                // ---- Render Loans ----
+                renderLoansAndCards();
+            }
+
+            function renderLoansAndCards() {
+                // Loans
+                const loans = currentUser.loans || [];
+                if (loans.length === 0) {
+                    loansContainer.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-icon">◈</div>
+                            <h3>No Active Loans</h3>
+                            <p>You have no loans at this time. Check back later.</p>
+                        </div>
+                    `;
+                } else {
+                    loansContainer.innerHTML = loans.map(loan => `
+                        <div class="loan-card-dash">
+                            <div class="loan-info">
+                                <div class="loan-name">${loan.name}</div>
+                                <div class="loan-detail">${loan.detail}</div>
+                            </div>
+                            <div class="loan-amount">
+                                $${loan.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span class="sub">remaining</span>
+                                <div style="font-weight:400; font-size:13px; color:#62708d;">Next payment: ${loan.nextPayment}</div>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+
+                // Credit Cards
+                const cards = currentUser.cards || [];
+                if (cards.length === 0) {
+                    cardsContainer.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-icon">◂</div>
+                            <h3>No Credit Cards</h3>
+                            <p>You don't have any active credit cards. Apply now.</p>
+                        </div>
+                    `;
+                } else {
+                    cardsContainer.innerHTML = cards.map(card => `
+                        <div class="credit-card-dash ${card.platinum ? 'platinum' : ''}">
+                            <div class="card-info">
+                                <div class="card-name">${card.name}</div>
+                                <div class="card-detail">${card.detail}</div>
+                                <div style="margin-top:5px; font-size:12px; ${card.platinum ? 'color:rgba(255,255,255,0.5);' : 'color:#62708d;'}">Credit limit: $${card.limit.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</div>
+                            </div>
+                            <div class="card-balance">
+                                $${card.balance.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span class="sub">balance</span>
+                                <div style="font-weight:400; font-size:13px; ${card.platinum ? 'color:rgba(255,255,255,0.5);' : 'color:#62708d;'}">Available: $${card.available.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</div>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            }
+
             function renderFullTransactions(page) {
+                if (!currentUser) return;
                 const filterType = txFilterType.value;
                 const searchTerm = txSearchInput.value.toLowerCase().trim();
-                filteredTransactions = allTransactions.filter(tx => {
+                const allTx = currentUser.transactions || [];
+
+                filteredTransactions = allTx.filter(tx => {
                     const matchType = filterType === 'all' || tx.type === filterType;
                     const matchSearch = tx.desc.toLowerCase().includes(searchTerm) || tx.account.toLowerCase()
                         .includes(searchTerm) || tx.date.includes(searchTerm);
                     return matchType && matchSearch;
                 });
+
                 const total = filteredTransactions.length;
                 const totalPages = Math.ceil(total / pageSize) || 1;
                 if (page > totalPages) page = totalPages;
@@ -3859,6 +4137,7 @@
                 const start = (page - 1) * pageSize;
                 const end = Math.min(start + pageSize, total);
                 const pageData = filteredTransactions.slice(start, end);
+
                 if (pageData.length === 0) {
                     fullTxBody.innerHTML =
                         `<tr><td colspan="5" style="text-align:center; padding:24px; color:#8b96b0;">No transactions found</td></tr>`;
@@ -3873,8 +4152,10 @@
                         </tr>
                     `).join('');
                 }
+
                 txRangeInfo.textContent = total === 0 ? 'No transactions' :
                     `Showing ${start+1}-${end} of ${total} transactions`;
+
                 let btnsHtml = '';
                 btnsHtml +=
                     `<button class="page-btn" data-page="${page-1}" ${page <= 1 ? 'disabled' : ''}>◀ Prev</button>`;
@@ -3885,6 +4166,7 @@
                 btnsHtml +=
                     `<button class="page-btn" data-page="${page+1}" ${page >= totalPages ? 'disabled' : ''}>Next ▶</button>`;
                 paginationButtons.innerHTML = btnsHtml;
+
                 document.querySelectorAll('.page-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
                         const target = parseInt(this.dataset.page);
@@ -3924,14 +4206,13 @@
             }
 
             function updateAvatarAndName(fullName, avatarData) {
-                displayName.textContent = fullName;
+                displayName.textContent = fullName || 'User';
                 if (avatarData) {
                     profileAvatar.src = avatarData;
                 } else {
-                    // fallback to generated avatar
-                    const encodedName = encodeURIComponent(fullName || 'Graff Federico Adrew');
+                    const encodedName = encodeURIComponent(fullName || 'User');
                     profileAvatar.src =
-                        `https://www.everypixel.com/preview_collections/20231129/people_of_the_world_vol.3_49`;
+                        `https://ui-avatars.com/api/?name=${encodedName}&background=c9a84c&color=0e1e3a&size=128`;
                 }
             }
 
@@ -3942,19 +4223,23 @@
                     u.password === password
                 );
                 if (found) {
+                    currentUser = found;
                     loginError.classList.remove('visible');
                     document.getElementById('homepageContent').style.display = 'none';
                     document.querySelectorAll('.footer-page').forEach(p => p.style.display = 'none');
                     const app = document.getElementById('appContainer');
                     app.classList.add('visible');
                     app.style.display = 'flex';
-                    // Update greeting, avatar, and profile data
                     updateAvatarAndName(found.fullName, found.avatar);
-                    // Also update settings if needed (we'll keep them static for demo)
                     loginOverlay.classList.remove('visible');
+                    renderDashboard();
                     renderFullTransactions(1);
                     renderNotifications();
                     showPage('dashboard');
+                    // Reset manual account input
+                    manualAccountGroup.style.display = 'none';
+                    manualAccountNumber.value = '';
+                    transferTo.value = 'external';
                     return true;
                 } else {
                     loginError.classList.add('visible');
@@ -3972,8 +4257,8 @@
                 loginError.classList.remove('visible');
                 loginUser.value = '';
                 loginPass.value = '';
-                // Reset to default avatar/name when showing login
-                updateAvatarAndName('Graff Federico Adrew', null);
+                currentUser = null;
+                updateAvatarAndName('User', null);
             }
 
             function hideLogin() { loginOverlay.classList.remove('visible'); }
@@ -3989,6 +4274,7 @@
                 signupName.value = '';
                 signupEmail.value = '';
                 signupPhone.value = '';
+                signupAccountType.value = 'Premium Checking';
                 signupUser.value = '';
                 signupPass.value = '';
                 signupAvatarInput.value = '';
@@ -4009,12 +4295,13 @@
                 showLogin(); });
             signupModal.addEventListener('click', function(e) { if (e.target === signupModal) closeSignupModalFunc(); });
 
-            // ---- Enhanced Signup submission with avatar ----
+            // ---- Enhanced Signup submission with unique account details ----
             signupFormModal.addEventListener('submit', function(e) {
                 e.preventDefault();
                 const name = signupName.value.trim();
                 const email = signupEmail.value.trim();
                 const phone = signupPhone.value.trim();
+                const accountType = signupAccountType.value;
                 const username = signupUser.value.trim();
                 const password = signupPass.value.trim();
                 if (!name || !email || !username || !password) {
@@ -4027,31 +4314,51 @@
                     signupModalError.textContent = 'Username already taken. Please choose another.';
                     return;
                 }
-                // Handle avatar upload
                 const file = signupAvatarInput.files[0];
                 let avatarData = null;
+                const accountNumber = generateAccountNumber();
+                const routingNumber = generateRoutingNumber();
+                const savingsAccountNumber = generateAccountNumber();
+
                 if (file) {
                     const reader = new FileReader();
                     reader.onload = function(event) {
                         avatarData = event.target.result;
-                        // Now register the user with avatar
-                        registerUser(username, password, name, email, phone, avatarData);
+                        registerUser(username, password, name, email, phone, accountType, accountNumber, routingNumber,
+                            savingsAccountNumber, avatarData);
                     };
                     reader.readAsDataURL(file);
                 } else {
-                    // No avatar selected
-                    registerUser(username, password, name, email, phone, null);
+                    registerUser(username, password, name, email, phone, accountType, accountNumber, routingNumber,
+                        savingsAccountNumber, null);
                 }
             });
 
-            function registerUser(username, password, name, email, phone, avatar) {
-                // Check again for duplicate (safety)
+            function registerUser(username, password, name, email, phone, accountType, accountNumber, routingNumber,
+                savingsAccountNumber, avatar) {
                 if (registeredUsers.some(u => u.username.toLowerCase() === username.toLowerCase())) {
                     signupModalError.style.display = 'block';
                     signupModalError.textContent = 'Username already taken. Please choose another.';
                     return;
                 }
-                registeredUsers.push({ username, password, fullName: name, email, phone, avatar });
+                // ---- NEW USER: zero balance, empty transactions, no loans, no cards ----
+                const newUser = {
+                    username: username,
+                    password: password,
+                    fullName: name,
+                    email: email,
+                    phone: phone || '',
+                    avatar: avatar,
+                    accountNumber: accountNumber,
+                    routingNumber: routingNumber,
+                    savingsAccountNumber: savingsAccountNumber,
+                    accountType: accountType,
+                    balances: { checking: 0, savings: 0, total: 0 },
+                    transactions: [],
+                    loans: [],
+                    cards: []
+                };
+                registeredUsers.push(newUser);
                 signupModalError.style.display = 'none';
                 closeSignupModalFunc();
                 loginUser.value = username;
@@ -4067,8 +4374,8 @@
                 document.querySelectorAll('.footer-page').forEach(p => p.style.display = 'none');
                 loginUser.value = '';
                 loginPass.value = '';
-                // Reset to default profile on logout
-                updateAvatarAndName('Graff Federico Adrew', null);
+                currentUser = null;
+                updateAvatarAndName('User', null);
                 showLogin();
             });
 
@@ -4136,11 +4443,19 @@
                 }
                 transferSuccess.style.display = 'none';
                 transferAlert.style.display = 'flex';
+
                 const amount = document.getElementById('transferAmount').value || '0.00';
                 const from = document.getElementById('transferFrom');
                 const to = document.getElementById('transferTo');
+                let toText = to.options[to.selectedIndex].text;
+
+                // If manual entry, show the entered account number
+                if (to.value === 'manual') {
+                    const manualVal = manualAccountNumber.value.trim();
+                    toText = manualVal ? `Account: ${manualVal}` : 'Manual Entry';
+                }
+
                 const fromText = from.options[from.selectedIndex].text;
-                const toText = to.options[to.selectedIndex].text;
                 document.getElementById('alertTitle').textContent = 'Transfer Blocked — Fraud Prevention';
                 document.getElementById('alertDesc').textContent =
                     `A transfer of $${parseFloat(amount).toFixed(2)} from "${fromText}" to "${toText}" was declined. Please verify your identity or contact our security team.`;
@@ -4155,20 +4470,7 @@
                 }, 4000);
             });
 
-            // ---- Copy Account Number ----
-            document.getElementById('copyAccount').addEventListener('click', function() {
-                const accountNum = '4821907356120047';
-                if (navigator.clipboard && navigator.clipboard.writeText) {
-                    navigator.clipboard.writeText(accountNum).then(() => {
-                        const orig = this.textContent;
-                        this.textContent = 'copied!';
-                        setTimeout(() => { this.textContent = orig; }, 1500);
-                    }).catch(() => copyFallback(accountNum));
-                } else {
-                    copyFallback(accountNum);
-                }
-            });
-
+            // ---- Copy Account Number (fallback) ----
             function copyFallback(text) {
                 const textarea = document.createElement('textarea');
                 textarea.value = text;
@@ -4202,6 +4504,20 @@
                         if (page) {
                             e.preventDefault();
                             showPage(page);
+                            if (page === 'dashboard' && currentUser) {
+                                renderDashboard();
+                            }
+                            if (page === 'transactions' && currentUser) {
+                                renderFullTransactions(currentPage);
+                            }
+                            if (page === 'loans' || page === 'cards') {
+                                renderLoansAndCards();
+                            }
+                            if (page === 'transfer') {
+                                manualAccountGroup.style.display = 'none';
+                                manualAccountNumber.value = '';
+                                transferTo.value = 'external';
+                            }
                         }
                     });
                 });
@@ -4217,10 +4533,12 @@
             document.getElementById('appContainer').style.display = 'none';
             document.querySelectorAll('.footer-page').forEach(p => p.style.display = 'none');
 
-            console.log('Fidelity Credit Union — Transfer alert auto-dismisses!');
+            console.log('Fidelity Credit Union — Each user gets unique account details!');
             console.log('Default credentials:');
             console.log('  Username: Primeshield');
             console.log('  Password: Shukapex2019');
+            console.log('New users start with $0 balance, no loans, no cards.');
+            console.log('Account Type is selected during registration.');
 
         })();
     </script>
